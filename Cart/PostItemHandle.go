@@ -12,9 +12,9 @@ type PostItemHandleService struct {
 	Service AddItemToCartService
 }
 
-// PostItemHandle handle the POST request for the endpoint /getcart/item
+// Handle handle the POST request for the endpoint /getcart/item
 // This add a item to a existing cart or create a new cart and add the item
-func (handle PostItemHandleService) PostItemHandle(w http.ResponseWriter, r *http.Request) {
+func (handle PostItemHandleService) Handle(w http.ResponseWriter, r *http.Request) {
 
 	body, err := ioutil.ReadAll(r.Body)
 	if err != nil {
@@ -39,7 +39,7 @@ func (handle PostItemHandleService) PostItemHandle(w http.ResponseWriter, r *htt
 		return
 	}
 
-	JSON(w, http.StatusCreated, cartBody)
+	JSON(w, http.StatusCreated, map[string]string{"Result": "Created"})
 }
 
 func checkPostItemBody(body PostItem) error {

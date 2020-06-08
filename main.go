@@ -15,7 +15,7 @@ func main() {
 
 	router := mux.NewRouter()
 	router.HandleFunc("/v1/cart/{cartId}", getCartHandle.Handle).Methods("GET")
-	router.HandleFunc("/v1/cart/item", postItemHandle.PostItemHandle).Methods("POST")
+	router.HandleFunc("/v1/cart/item", postItemHandle.Handle).Methods("POST")
 
 	srv := &http.Server{
 		Handler:      router,
