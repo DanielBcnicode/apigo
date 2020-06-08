@@ -18,7 +18,7 @@ func (repository CartMemoryRepository) FindByID(id string) (Cart, error) {
 	return emptyCart, errors.New("Cart not found")
 }
 
-//Persist Cart
+//Persist Cart If some cart with same ID is found, it will delete
 func (repository CartMemoryRepository) Persist(item Cart) error {
 	_, err := repository.FindByID(item.ID)
 	if err == nil {
