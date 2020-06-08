@@ -10,9 +10,13 @@ import (
 )
 
 func main() {
+
+	postItemHandle := DefaultContainer.GetPostItemHandleService()
+	//new(cart.PostItemHandleService)
+
 	router := mux.NewRouter()
 	router.HandleFunc("/v1/cart/{cartId}", cart.GetCartHandle).Methods("GET")
-	router.HandleFunc("/v1/cart/item", cart.PostItemHandle).Methods("POST")
+	router.HandleFunc("/v1/cart/item", postItemHandle.PostItemHandle).Methods("POST")
 
 	srv := &http.Server{
 		Handler:      router,

@@ -2,8 +2,6 @@ package cart
 
 import (
 	"time"
-
-	uuid "github.com/satori/go.uuid"
 )
 
 // Item basic structure of an item
@@ -17,10 +15,10 @@ type Item struct {
 }
 
 // CreateItem Item constructor
-func CreateItem(cartID string, name string, description string, price float32) (Item, error) {
+func CreateItem(itemID string, cartID string, name string, description string, price float32) (Item, error) {
 	item := new(Item)
 
-	item.ID = uuid.NewV4().String()
+	item.ID = itemID //uuid.NewV4().String()
 	item.CartID = cartID
 	item.Name = name
 	item.Description = description

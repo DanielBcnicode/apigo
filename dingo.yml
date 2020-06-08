@@ -1,0 +1,14 @@
+services:
+  ItemMemoryRepository:
+    type: 'github.com/DanielBcnicode/apigo/Cart.ItemMemoryRepository'
+  CartMemoryRepository:
+    type: 'github.com/DanielBcnicode/apigo/Cart.CartMemoryRepository'
+  AddItemToCartService:
+    type: 'github.com/DanielBcnicode/apigo/Cart.AddItemToCartService'
+    properties:
+      ItemRepository: '@{ItemMemoryRepository}'
+      CartRepository: '@{CartMemoryRepository}'
+  PostItemHandleService:
+    type: 'github.com/DanielBcnicode/apigo/Cart.PostItemHandleService'
+    properties: 
+      Service: '@{AddItemToCartService}'

@@ -2,7 +2,7 @@ package cart
 
 // ItemRepository repository interface
 type ItemRepository interface {
-	FindByID(id string) Item
+	FindByID(id string) (Item, error)
 	FindByCart(cart Cart) []Item
-	Persist(item Item)
+	Persist(item Item) error
 }

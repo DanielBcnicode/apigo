@@ -7,9 +7,15 @@ import (
 	"net/http"
 )
 
+//PostItemHandleService service to handle the endpoint POST getcart/item
+type PostItemHandleService struct {
+	Service AddItemToCartService
+}
+
 // PostItemHandle handle the POST request for the endpoint /getcart/item
 // This add a item to a existing cart or create a new cart and add the item
-func PostItemHandle(w http.ResponseWriter, r *http.Request) {
+func (handle PostItemHandleService) PostItemHandle(w http.ResponseWriter, r *http.Request) {
+
 	body, err := ioutil.ReadAll(r.Body)
 	if err != nil {
 		ERROR(w, http.StatusUnprocessableEntity, err)
@@ -24,6 +30,11 @@ func PostItemHandle(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if err = checkPostItemBody(cartBody); err != nil {
+		ERROR(w, http.StatusUnprocessableEntity, err)
+		return
+	}
+
+	if err = handle.Service.AddItemToCart(cartBody); err != nil {
 		ERROR(w, http.StatusUnprocessableEntity, err)
 		return
 	}
