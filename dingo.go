@@ -6,6 +6,8 @@ import Cart "github.com/DanielBcnicode/apigo/Cart"
 type Container struct {
 	AddItemToCartService	*Cart.AddItemToCartService
 	CartMemoryRepository	*Cart.CartMemoryRepository
+	GetCartHandle		*Cart.GetCartHandle
+	GetCartService		*Cart.GetCartService
 	ItemMemoryRepository	*Cart.ItemMemoryRepository
 	PostItemHandleService	*Cart.PostItemHandleService
 }
@@ -30,6 +32,22 @@ func (container *Container) GetCartMemoryRepository() Cart.CartMemoryRepository 
 		container.CartMemoryRepository = &service
 	}
 	return *container.CartMemoryRepository
+}
+func (container *Container) GetGetCartHandle() Cart.GetCartHandle {
+	if container.GetCartHandle == nil {
+		service := Cart.GetCartHandle{}
+		service.Service = container.GetGetCartService()
+		container.GetCartHandle = &service
+	}
+	return *container.GetCartHandle
+}
+func (container *Container) GetGetCartService() Cart.GetCartService {
+	if container.GetCartService == nil {
+		service := Cart.GetCartService{}
+		service.CartRepository = container.GetCartMemoryRepository()
+		container.GetCartService = &service
+	}
+	return *container.GetCartService
 }
 func (container *Container) GetItemMemoryRepository() Cart.ItemMemoryRepository {
 	if container.ItemMemoryRepository == nil {

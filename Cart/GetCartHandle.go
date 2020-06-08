@@ -1,16 +1,28 @@
 package cart
 
 import (
-	"encoding/json"
 	"net/http"
 
 	"github.com/gorilla/mux"
 )
 
-// GetCartHandle handle the GET request for the endpoint /getcart/{item}
-func GetCartHandle(w http.ResponseWriter, r *http.Request) {
+//GetCartHandle Get handle to obtain a Cart for v*/getcart/{item}
+type GetCartHandle struct {
+	Service GetCartService
+}
+
+// Handle handle the GET request for the endpoint v*/getcart/{item}
+func (handle GetCartHandle) Handle(w http.ResponseWriter, r *http.Request) {
 	// an example API handler
 	vars := mux.Vars(r)
 	requestID := vars["cartId"]
-	json.NewEncoder(w).Encode(map[string]string{"Valor enviado ": requestID})
+
+	cart, err := handle.Service.getCart(requestID)
+
+	if err != nil {
+		ERROR(w, http.StatusUnprocessableEntity, err)
+		return
+	}
+
+	JSON(w, http.StatusCreated, cart)
 }

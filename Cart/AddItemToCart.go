@@ -13,20 +13,20 @@ func (service AddItemToCartService) AddItemToCart(postItem PostItem) error {
 	if serviceError := checkIntegrity(service); serviceError != nil {
 		return serviceError
 	}
-	cart, err := service.CartRepository.FindByID(postItem.CartID)
-	if err != nil {
+
+	cart, notFoundError := service.CartRepository.FindByID(postItem.CartID)
+	if notFoundError != nil {
 		cart, _ = CreateCart(postItem.CartID)
 	}
-	item, err2 := CreateItem(postItem.ID, cart.ID, postItem.Name, postItem.Description, postItem.Price)
-	if err2 != nil {
-		return err2
+
+	item, createItemError := CreateItem(postItem.ID, cart.ID, postItem.Name, postItem.Description, postItem.Price)
+	if createItemError != nil {
+		return createItemError
 	}
 
-	if cart.ItemExist(item.ID) {
-		return errors.New("The Item already exists")
+	if addItemError := cart.AddItem(item); addItemError != nil {
+		return addItemError
 	}
-
-	cart.Items = append(cart.Items, item)
 
 	service.ItemRepository.Persist(item)
 	service.CartRepository.Persist(cart)

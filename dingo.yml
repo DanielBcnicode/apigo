@@ -12,3 +12,13 @@ services:
     type: 'github.com/DanielBcnicode/apigo/Cart.PostItemHandleService'
     properties: 
       Service: '@{AddItemToCartService}'
+
+  GetCartService:
+    type: 'github.com/DanielBcnicode/apigo/Cart.GetCartService'
+    properties:
+      CartRepository: '@{CartMemoryRepository}'
+  GetCartHandle:
+    type: 'github.com/DanielBcnicode/apigo/Cart.GetCartHandle'
+    properties:
+      Service: '@{GetCartService}'
+  

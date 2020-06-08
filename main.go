@@ -5,17 +5,16 @@ import (
 	"net/http"
 	"time"
 
-	cart "github.com/DanielBcnicode/apigo/Cart"
 	"github.com/gorilla/mux"
 )
 
 func main() {
 
 	postItemHandle := DefaultContainer.GetPostItemHandleService()
-	//new(cart.PostItemHandleService)
+	getCartHandle := DefaultContainer.GetGetCartHandle()
 
 	router := mux.NewRouter()
-	router.HandleFunc("/v1/cart/{cartId}", cart.GetCartHandle).Methods("GET")
+	router.HandleFunc("/v1/cart/{cartId}", getCartHandle.Handle).Methods("GET")
 	router.HandleFunc("/v1/cart/item", postItemHandle.PostItemHandle).Methods("POST")
 
 	srv := &http.Server{

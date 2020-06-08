@@ -1,6 +1,9 @@
 package cart
 
-import "time"
+import (
+	"errors"
+	"time"
+)
 
 // Cart basic struct of a cart
 type Cart struct {
@@ -17,6 +20,18 @@ func CreateCart(id string) (Cart, error) {
 	cart.Items = make([]Item, 0)
 
 	return *cart, nil
+}
+
+//AddItem add a item to the Cart
+func (cart *Cart) AddItem(item Item) error {
+	if cart.ItemExist(item.ID) {
+		return errors.New("Item already exists")
+	}
+	if cart.ID != item.CartID {
+		return errors.New("Item is not for the current Cart")
+	}
+	cart.Items = append(cart.Items, item)
+	return nil
 }
 
 //ItemExist verify the existence of a item in the cart
