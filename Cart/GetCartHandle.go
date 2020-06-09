@@ -17,7 +17,7 @@ func (handle GetCartHandle) Handle(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	requestID := vars["cartId"]
 
-	cart, err := handle.Service.getCart(requestID)
+	cart, err := handle.Service.GetCart(requestID)
 
 	if err != nil {
 		ERROR(w, http.StatusUnprocessableEntity, err)

@@ -9,7 +9,7 @@ type GetCartService struct {
 	CartRepository CartRepository
 }
 
-func (service GetCartService) getCart(id string) (Cart, error) {
+func (service GetCartService) GetCart(id string) (Cart, error) {
 	emptyCart := Cart{}
 	if errID := service.checkParameter(id); errID != nil {
 		return emptyCart, errID
